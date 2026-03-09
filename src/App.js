@@ -1,4 +1,6 @@
- import React, { useState } from "react";
+import React, { useState } from "react";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
 
 function App() {
 
@@ -45,6 +47,26 @@ function App() {
     }
   };
 
+  // Excel Download Function
+  const downloadExcel = () => {
+
+    const worksheet = XLSX.utils.json_to_sheet(students);
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array"
+    });
+
+    const data = new Blob([excelBuffer], {
+      type: "application/octet-stream"
+    });
+
+    saveAs(data, "students.xlsx");
+  };
+
   return (
     <div style={{ padding: "30px" }}>
 
@@ -78,6 +100,10 @@ function App() {
 
       <br />
 
+    
+
+      <br /><br />
+
       <table border="1" cellPadding="10">
 
         <thead>
@@ -109,13 +135,18 @@ function App() {
             </tr>
 
           ))}
+           
 
         </tbody>
 
       </table>
-
+{/* Excel Download Button */}
+      <button className="download-btn" onClick={downloadExcel}>
+        Download Excel
+      </button>
     </div>
+
   );
 }
-
+   
 export default App;
