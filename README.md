@@ -1,4 +1,4 @@
-Students Table App
+Students Table 
 
 This is a simple React application to manage student records.
 
