@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
+ 
 
 function App() {
 
@@ -55,7 +55,9 @@ const downloadExcel = () => {
     return;
   }
 
-  const worksheet = XLSX.utils.json_to_sheet(students);
+   const worksheet = XLSX.utils.json_to_sheet(students, {
+  header: ["name", "email", "age"]
+});
 
   const workbook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Students");
